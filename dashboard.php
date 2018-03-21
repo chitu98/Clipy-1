@@ -5,26 +5,55 @@
     include('include/header.php');
 ?>
 
-        <?php 
-    if(isset($_GET['success'])){
-        if($_GET['success'] == 1){
-            echo '<div class="alert alert-success fade show" role="alert" style="margin:35px;"><strong>Hey there,</strong> Login Successful</div>';
-        }
-    } 
-?>
 
         <style>
-            .title-card{
-                width:auto;text-align:left;display:inline;max-width:166px;
-            }
-            .clip-card{
-                height:250px
+            .title-card {
+                text-align: left;
+                display: inline;
+                max-width: 166px;
             }
 
+            .clip-card {
+                height: 250px
+            }
         </style>
+
         <div class="container">
-            <div class="row mt-2">
-                <div class="col-sm-4">
+
+            <div class="jumbotron">
+                <h1 class="text-primary">Hello
+                    <?php echo htmlspecialchars(trim($_COOKIE['name'])) ?>,
+                    <span class="h1 text-primary">Add Some Clips Today</span>
+                    <button class="btn float-right btn-lg btn-success" data-toggle="modal" data-target="#addclip">Add</button>
+                </h1>
+
+                <!-- Model For Adding Clip -->
+                <div class="modal fade" id="addclip" tabindex="-1" role="dialog" aria-labelledby="addclipLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form method="post" action="save.php">
+                                <div class="card">
+                                    <div class="card-header">
+
+                                        <input type="title" name="title" class="form-control" placeholder="Title">
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea class="form-control clip-card" name="clip" placeholder="A New Clip"></textarea>
+                                        <br>
+                                        <button class="btn btn-primary" style="width:100%;" type="submit" name="save">Save</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <!-- <div class="col-sm-4 mt-2">
                    <form method="post" action="save.php">
                     <div class="card">
                         <div class="card-header">
@@ -38,34 +67,40 @@
                         
                     </div>
                     </form>
-                </div>
-                
-       <?php include('include/functions.php') ?>
-               
-               <?php getallclips(); ?>
-                <!-- 
-                  <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Title
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                    </div>
-                </div>
-                -->
-                
+                </div> -->
+
+                <?php include('include/functions.php') ?>
+
+                <?php getallclips(); ?>
+
             </div>
         </div>
 
-<script>
-function edit(block){
-    console.log('edit-clicked');
-    console.log(block);
-}
-</script>
+        <script>
+            var editableBlocks = Array();
+            var editableClicked = false;
 
-<?php
+            function edit(block) {
+                if (editableBlocks.indexOf(block) > -1) {
+                    return;
+                }
+                if (editableClicked) {
+                    alert('You Can Edit only One blok at a Time');
+                    return;
+                }
+                editableClicked = true;
+                editableBlocks.push(block);
+                console.log('edit-clicked');
+                block.parentNode.getElementsByTagName("input")[1].removeAttribute('readonly');
+                block.parentNode.parentNode.getElementsByTagName("input")[2].setAttribute("type","button");
+                block.parentNode.parentNode.getElementsByTagName("textarea")[0].removeAttribute('readonly');
+                block.parentNode.parentNode.getElementsByClassName('card-body')[0].appendChild(document.createElement('br'));
+                console.log(block.parentNode);
+
+
+            }
+        </script>
+
+        <?php
     include('include/footer.php');
 ?>

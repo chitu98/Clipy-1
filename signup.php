@@ -2,10 +2,10 @@
 if(isset($_POST['submit'])){
     include_once('include\config.php');
     
-    $fname = trim($_POST['f_name']);
-    $lname = trim($_POST['l_name']);
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
+    $fname = htmlspecialchars(trim($_POST['f_name']));
+    $lname = htmlspecialchars(trim($_POST['l_name']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $password = htmlspecialchars(trim($_POST['password']));
     
     $sql="INSERT INTO users(f_name,l_name,email,password) VALUES ('$fname','$lname','$email','$password')";
    

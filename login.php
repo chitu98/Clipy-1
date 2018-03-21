@@ -12,6 +12,11 @@ if(isset($_POST['submit'])){
    $cookie_value = getidbyemail($email);
    setcookie($cookie_name, $cookie_value, time() + (86400 * 1), "/"); 
 
+   $cookie_name = "name";
+   $cookie_value = getnamebyemail($email);
+   setcookie($cookie_name, $cookie_value, time() + (86400 * 1), "/"); 
+
+
    $cookie_name = "password";
    $cookie_value = $password;
    setcookie($cookie_name, $cookie_value, time() + (86400 * 1), "/");
